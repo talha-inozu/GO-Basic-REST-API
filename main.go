@@ -1,17 +1,22 @@
 package main
 
 import (
-	utiler "deneme/varaibles"
+	models "deneme/model"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
-	var student utiler.StudentDTO = utiler.CreateStudent(15, "Dumy", "Dum", 1)
+	var student models.StudentDTO = models.CreateStudent(15, "Dumy", "Dum", 1)
 	app := fiber.New()
 
-	app.Get("/", func(c *fiber.Ctx) error {
+	app.Get("/getStudent", func(c *fiber.Ctx) error {
 		return c.JSON(student)
+	})
+
+	app.Get("/shutdown", func(c *fiber.Ctx) error {
+		app.Shutdown()
+		return nil
 	})
 
 	app.Listen(":3000")

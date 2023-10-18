@@ -1,4 +1,4 @@
-package utiler
+package models
 
 type StudentDTO struct {
 	ID        int    `json:"id"`
