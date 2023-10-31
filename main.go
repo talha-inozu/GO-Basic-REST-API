@@ -2,23 +2,24 @@ package main
 
 import (
 	models "deneme/model"
-
-	"github.com/gofiber/fiber/v2"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	var student models.StudentDTO = models.CreateStudent(15, "Dumy", "Dum", 1)
-	app := fiber.New()
+	models.CreateStudent(15, "Dumy", "Dum", 1)
 
-	app.Get("/getStudent", func(c *fiber.Ctx) error {
-		return c.JSON(student)
+	app := gin.Default()
+
+	app.GET("/getStudent", func(c *gin.Context) {
+		c.JSON(200, models.STUDENT)
 	})
 
-	app.Get("/shutdown", func(c *fiber.Ctx) error {
-		app.Shutdown()
-		return nil
+	app.POST("/createStudent", func(c *gin.Context) {
+		var reqBody models.StudentDTO
+		c.ShouldBindJSON(&reqBody)
+		models.StudentArray = append(models.StudentArray, reqBody)
+		c.JSON(200, models.StudentArray)
 	})
 
-	app.Listen(":3000")
-
+	app.Run(":3000")
 }

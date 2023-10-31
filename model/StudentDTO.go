@@ -7,11 +7,17 @@ type StudentDTO struct {
 	Age       int    `json:"age"`
 }
 
+var STUDENT *StudentDTO
+
+var StudentArray []StudentDTO
+
 func CreateStudent(id int, firstName string, lastName string, age int) StudentDTO {
-	return StudentDTO{
+	STUDENT = &StudentDTO{
 		ID:        id,
 		FirstName: firstName,
 		LastName:  lastName,
 		Age:       age,
 	}
+
+	return *STUDENT
 }
